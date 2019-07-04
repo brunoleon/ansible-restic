@@ -7,25 +7,25 @@
 - name: Download client binary
   get_url:
     url: '{{ restic_url }}'
-    dest: '{{ restic_download_path }}/restic.bz2'
+    dest: '{{ restic_install_path }}/restic.bz2'
     force: True
   register: get_url_restic
 
 - name: Decompress the binary
-  shell: "bzip2 -dc {{ get_url_restic.dest }} > {{ restic_download_path }}/bin/restic-{{ restic_version }}"
+  shell: "bzip2 -dc {{ get_url_restic.dest }} > {{ restic_install_path }}/restic-{{ restic_version }}"
   args:
-    creates: '{{ restic_download_path }}/bin/restic-{{ restic_version }}'
+    creates: '{{ restic_install_path }}/restic-{{ restic_version }}'
 
 - name: Ensure permissions are correct
   file:
-    path: '{{ restic_download_path }}/bin/restic-{{ restic_version }}'
+    path: '{{ restic_install_path }}/restic-{{ restic_version }}'
     mode: '0755'
     owner: '{{ restic_dir_owner }}'
     group: '{{ restic_dir_group }}'
 
 - name: Create symbolic link to the correct version
   file:
-    src: '{{ restic_download_path }}/bin/restic-{{ restic_version }}'
+    src: '{{ restic_install_path }}/restic-{{ restic_version }}'
     path: '{{ restic_install_path }}/restic'
     state: link
     force: True

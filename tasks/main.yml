@@ -10,7 +10,7 @@
 
 - name: Check if downloaded binary is present
   stat:
-    path: '{{ restic_download_path }}/bin/restic-{{ restic_version }}'
+    path: '{{ restic_install_path }}/restic-{{ restic_version }}'
   register: restic_executable
 
 - name: Check if installed binary is present
